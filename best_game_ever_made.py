@@ -1,7 +1,7 @@
 import pygame
 import os
 from random import randint
-from floating_classes import Colorcheck
+from color_class import Colorcheck
 from action_classes import Player
 from action_classes import Enemy
 
