@@ -1,13 +1,10 @@
 import pygame
 import os
-from color_class import Colorcheck
 from button import Button
-
-colorcheck = Colorcheck()
 
 
 class Player():
-    def __init__(self, ref, side, name, health):
+    def __init__(self, ref, side, name, type, health):
         self._ref = pygame.image.load(os.path.join(ref[0],ref[1],ref[2]))
         self._img = pygame.transform.rotate(pygame.transform.scale(self._ref, (100, 150)), 0)
 
@@ -17,6 +14,7 @@ class Player():
         self._blackbar = pygame.Rect(self._healthbar.x, self._healthbar.y, self._healthbar.width, self._healthbar.height)
 
         self._name = name
+        self._type = type
         self._health = health
         self._original_health = self._health
 
@@ -43,10 +41,6 @@ class Player():
     def set_move(self, move):
         self._moves.append(move)
 
-    def use_move(self, num):
-            print(f"{self._name} used {self._moves[num]._name}!")
-            self._usedmove = num
-
 class Enemy():
     def __init__(self, ref, name, health):
         self._ref = pygame.image.load(os.path.join(ref[0],ref[1],ref[2]))
@@ -69,3 +63,4 @@ class Enemy():
                 break
     def use_move(self):
         pass
+###
