@@ -1,8 +1,6 @@
 import pygame
 import os
-from color_class import Colorcheck
 
-colorcheck = Colorcheck()
 
 class Button():
     def __init__(self, num, player, pos, width, height, color, text, elevation):
@@ -19,6 +17,14 @@ class Button():
 
         self._color = color     #color code
         self._original_color = color    #original color code from init parameter
+        self._dimmed_color = color    #darker color code for hovering
+
+        if color[0] >= 25:
+            self._dimmed_color = (self._dimmed_color[0]-25, self._dimmed_color[1], self._dimmed_color[2])
+        if color[1] >= 25:
+            self._dimmed_color = (self._dimmed_color[0], self._dimmed_color[1]-25, self._dimmed_color[2])
+        if color[2] >= 25:
+            self._dimmed_color = (self._dimmed_color[0], self._dimmed_color[1], self._dimmed_color[2]-25)
 
         self._elevation = elevation
         self._dynamic_elevation = elevation
@@ -41,7 +47,7 @@ class Button():
     def click(self):
         mouse_pos = pygame.mouse.get_pos()
         if self._rect.collidepoint(mouse_pos):
-            self._color = colorcheck.get_color("")
+            self._color = self._dimmed_color
             if pygame.mouse.get_pressed()[0]:
                 self._dynamic_elevation = 0
                 self._pressed = True
@@ -49,7 +55,7 @@ class Button():
                 self._dynamic_elevation = self._elevation
                 if self._pressed == True:
                     #<<< ON CLICK EVENTS >>>
-                    self._player.use_move(self._num)
+                    self._player._usedmove = self._num
                     self._pressed = False
         else:
             self._dynamic_elevation = self._elevation
