@@ -1,11 +1,12 @@
 import pygame
 import os
-from color_class import Colorcheck
+from check import Colorcheck
+from check import Movecheck
 from preset import Preset
 pygame.font.init()
 pygame.mixer.init()
 
-WIDTH, HEIGHT = 900, 500
+WIDTH, HEIGHT = 900, 600
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Kung Fu Panda 4")
 FPS = 60
@@ -58,9 +59,15 @@ class BattleWindow():
             self._player._ACTION_MOVES[i].draw(WIN)
 
     def combatpros(self):
-        if self._player._usedmove != None:
-            print(self._player._usedmove)
-            self._player._usedmove = None
+        for i in range(len(self._player._moves)):
+            if self._player._usedmove == i:
+
+                dmg_dealt = self._player._moves[i].effectiveness(self._enemy)
+                print(f"{self._player._name} used {self._player._moves[i]._name}.")
+                print(f"{self._enemy._name} took {dmg_dealt} damage!")
+                self._enemy._health -= dmg_dealt
+
+                self._player._usedmove = None
 
     def keys_pressed(self, keys_pressed):
         if keys_pressed[pygame.K_5]:
@@ -82,10 +89,10 @@ class BattleWindow():
             if event.type == MOVE_1:
                 pass
             if event.type == CHANGE_CHAR1:
-                self._player = preset.get_Po(True)
+                self._player = preset.get_Charmander(True)
                 self._ACTION_MOVES = self._player.load_moves(self._ACTION_BAR)
             if event.type == CHANGE_CHAR2:
-                self._player = preset.get_Shifu(True)
+                self._player = preset.get_Piplup(True)
                 self._ACTION_MOVES = self._player.load_moves(self._ACTION_BAR)
         
 
@@ -107,5 +114,5 @@ class BattleWindow():
 
 
 preset = Preset()
-win = BattleWindow(["xprojekt1","Assets","scenery.jpg"], preset.get_TaiLung(True), preset.get_Po(False))
+win = BattleWindow(["BestGameEverMade","Assets","scenery.jpg"], preset.get_Turtwig(True), preset.get_Piplup(False))
 win.main()
