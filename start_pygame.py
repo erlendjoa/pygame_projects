@@ -1,36 +1,42 @@
 import pygame
 import os
+
 pygame.font.init()
 pygame.mixer.init()
 
 WIDTH, HEIGHT = 900, 500
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Caption")
-FPS = 60
+pygame.display.set_caption("Title of Game")
+pygame.display.flip()
 
 
-#write global variables here...
-
-def draw_window():
-    WIN.fill((255, 225, 255))
-    pygame.display.update()
-
-#write functions here...
+class Window():
+    def __init__(self):
+        pass
 
 
-def main():
-    run = True
-    while run:
-        pygame.time.Clock().tick(FPS)
-        keys_pressed = pygame.key.get_pressed()
-        for event in pygame.event.get():
-            if event.type == pygame.quit:
-                run = False
-            #write events here...
+    def keys(self, keys_pressed):
+        pass
 
-        #write something here...
+    def event(self, event):
+        pass
 
-        draw_window() 
-    pygame.quit()
-if __name__ == "__main__":
-    main()
+    def blit(self):
+        pass
+
+    def update(self):
+        WIN.fill((255,255,255))
+        pygame.display.update()
+
+    def main(self):
+        while True:
+            pygame.time.Clock().tick(60)
+            keys_pressed = pygame.key.get_pressed()
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                self.event(event)
+            self.keys(keys_pressed)
+            self.update()
+
+Window().main()
